@@ -26,7 +26,7 @@ import src.services.recognition_service.recognition_helper as recognition_helper
 
 
 # load the model
-model = load_model('resources/model/facenet_keras.h5')
+loaded_model = load_model('resources/model/facenet_keras.h5')
 
 
 def check_view(blob, detection):
@@ -304,14 +304,14 @@ def main_recognition_handler():
 
     newTrainX = list()
     for face_pixels in trainX:
-        embedding = get_embedding(model, face_pixels)
+        embedding = get_embedding(loaded_model, face_pixels)
         newTrainX.append(embedding)
     newTrainX = asarray(newTrainX)
     print(newTrainX.shape)
     # convert each face in the test set to an embedding
     newTestX = list()
     for face_pixels in testX:
-        embedding = get_embedding(model, face_pixels)
+        embedding = get_embedding(loaded_model, face_pixels)
         newTestX.append(embedding)
     newTestX = asarray(newTestX)
     print(newTestX.shape)

@@ -34,6 +34,20 @@ def check_view():
     return recognition_service.check_view(request_data['data']['image'], request_data['data']['detection']), 200
 
 
+@app.route('/recognize_user', methods=['POST'])
+@cross_origin()
+def check_view():
+    request_data = json.loads(request.data)
+    return recognition_service.main_recognition_handler(request_data['data']['image'], request_data['data']['detection']), 200
+
+
+@app.route('/register_user', methods=['POST'])
+@cross_origin()
+def check_view():
+    request_data = json.loads(request.data)
+    return recognition_service.gather_data(request_data['data']['image'], request_data['data']['detection']), 200
+
+
 
 if __name__ == '__main__':
     app.run()
