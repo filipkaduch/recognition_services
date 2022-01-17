@@ -368,3 +368,7 @@ def main_recognition_handler():
     key = cv2.waitKey()  # change to your own waiting time 1000 = 1 second
     if key == 27:  # if ESC is pressed, exit
         cv2.destroyAllWindows()
+
+
+def remove_user():
+    print('Hello')

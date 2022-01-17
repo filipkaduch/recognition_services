@@ -45,8 +45,15 @@ def check_view():
 @cross_origin()
 def check_view():
     request_data = json.loads(request.data)
+    print(request_data)
     return recognition_service.gather_data(request_data['data']['image'], request_data['data']['detection']), 200
 
+
+@app.route('/delete_user', methods=['DELETE'])
+@cross_origin()
+def check_view():
+    request_data = json.loads(request.data)
+    return recognition_service.remove_user(request_data['userId']), 200
 
 
 if __name__ == '__main__':
