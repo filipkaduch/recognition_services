@@ -294,6 +294,7 @@ def get_embedding(model, face_pixels):
     yhat = model.predict(samples)
     return yhat[0]
 
+
 def main_recognition_handler():
     trainX, trainy = load_dataset("resources/dataset/train/")
     testX, testy = load_dataset("resources/dataset/val/")
