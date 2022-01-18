@@ -88,12 +88,14 @@ def load_faces(directory):
         faces.append(pix)
     return faces
 
+
 def clean_dir():
     path = '/dataset/train/User1'
     files = os.listdir(path)
 
     for index, file in enumerate(files):
         os.rename(os.path.join(path, file), os.path.join(path, ''.join([str(index), '.jpg'])))
+
 
 def face_detect():
     faceCascade = cv2.CascadeClassifier('Cascades/haarcascade_frontalface_default.xml')
