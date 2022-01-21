@@ -1,0 +1,32 @@
+version: "2.1"
+
+services:
+  registration-login:
+    image: registration-login
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - AWS_REGION=local
+      - ENVIRONMENT=local
+      - AUTH_ENABLED=false
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres-standalone
+    image: postgres
+    environment:
+      - 'POSTGRES_ROOT_PASSWORD=admin'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=admin'
+      - 'POSTGRES_DB=postgres'
+    ports:
+      - "5432:5432"
+  pe-backend:
+    image: pe-backend
+    ports:
+      - "5001:5000"
+  vue-app:
+    image: vue-app
+    ports:
+      - "8001:8000"
