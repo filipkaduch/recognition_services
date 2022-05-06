@@ -75,11 +75,11 @@ def check_registration():
     username = request.args.get('username')
     if os.path.isdir('dataset/train/' + username):
         if len(os.listdir('dataset/train/' + username)) > 10:
-            return 'User registered', 200
+            return True, 200
         else:
-            return 'User not registered', 400
+            return False, 400
     else:
-        return 'User not registered', 400
+        return False, 400
 
 
 @app.route('/register_user', methods=['POST'])
