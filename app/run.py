@@ -3,6 +3,7 @@ import io
 import os
 import sys
 import ssl
+import requests
 
 import PIL
 import numpy as np
@@ -63,14 +64,27 @@ def recognize_users():
         recognition_service.save_data(request_data['data']['image'], request_data['data']['user'], 'val'), 200
     else:
         return 'Not detected', 200
+    recognized_text, predicted_name = recognition_service.main_recognition_handler(request_data['data']['user'])
+    if predicted_name == request_data['data']['user']:
+        requests.post(url='http://147.175.105.115:8080/authy', data='Success')
+    return recognized_text, 200
 
-    return recognition_service.main_recognition_handler(request_data['data']['user']), 200
+
+@app.route('/check_registration', methods=['GET'])
+def check_registration():
+    username = request.args.get('username')
+    if os.path.isdir('dataset/train/' + username):
+        if len(os.listdir('dataset/train/' + username)) > 10:
+            return 'User registered', 200
+        else:
+            return 'User not registered', 400
+    else:
+        return 'User not registered', 400
 
 
 @app.route('/register_user', methods=['POST'])
 def register_users():
     request_data = json.loads(request.data)
-    print(request_data)
     fh = open("imageToSave.png", "wb")
     jpg_original = base64.decodebytes(str(request_data['data']['image'].split(',')[1]).encode())
     fh.write(jpg_original)

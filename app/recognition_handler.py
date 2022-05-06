@@ -257,8 +257,10 @@ def recognize():
 
 
 # load a dataset that contains one subdir for each class that in turn contains images
-def load_dataset(directory):
+def load_dataset(directory, user=None):
     X, y = list(), list()
+    photo_index = 0
+
     # enumerate folders, on per class
     for subdir in listdir(directory):
         # path
@@ -267,10 +269,13 @@ def load_dataset(directory):
         # skip any files that might be in the dir
         if not isdir(path):
             continue
+
         # load all faces in the subdirectory
         faces = load_faces(path)
         # create labels
         labels = [subdir for _ in range(len(faces))]
+        if subdir == user:
+            photo_index = len(faces) - 1
         # summarize progress
         print('>loaded %d examples for class: %s' % (len(faces), subdir))
         # store
@@ -279,7 +284,10 @@ def load_dataset(directory):
 
     print(X)
     print(y)
-    return asarray(X), asarray(y)
+    if user is not None:
+        return photo_index, asarray(X), asarray(y)
+    else:
+        return asarray(X), asarray(y)
 
 
 def get_embedding(model, face_pixels):
@@ -298,12 +306,8 @@ def get_embedding(model, face_pixels):
 def main_recognition_handler(user):
     loaded_model = load_model('facenet_keras.h5')
     trainX, trainy = load_dataset(str(os.getcwd()) + "/dataset/train/")
-    testX, testy = load_dataset(str(os.getcwd()) + "/dataset/val/")
+    photo_index, testX, testy = load_dataset(str(os.getcwd()) + "/dataset/val/", user)
     print((str(os.getcwd()) + "\\dataset\\val\\" + str(user) + "\\"))
-    print('TRAINX')
-    print(trainX)
-    print('TESTX')
-    print(testX)
     savez_compressed('compressed.npz', trainX, trainy, testX, testy)
     data = load('compressed.npz')
     trainX, trainy, testX, testy = data['arr_0'], data['arr_1'], data['arr_2'], data['arr_3']
@@ -340,7 +344,7 @@ def main_recognition_handler(user):
     trainy_Embed = out_encoder.transform(trainy_Embed)
     testy_Embed = out_encoder.transform(testy_Embed)
     # fit model
-    model = SVC(kernel='linear', probability=True)
+    model = SVC(kernel='linear', C=1.0, gamma=0.01, probability=True)
     model.fit(trainX_Embed, trainy_Embed)
     # predict
     # yhat_train = model.predict(trainX)
@@ -352,24 +356,27 @@ def main_recognition_handler(user):
     # print('Accuracy: train=%.3f, test=%.3f' % (score_train * 100, score_test * 100))
     # train_person()
     # recognize()
-    selection = len(testX_faces) - 1
+
+    selection = photo_index - 1
     random_face_pixels = testX_faces[selection]
     random_face_emb = testX_Embed[selection]
     random_face_class = testy_Embed[selection]
     random_face_name = out_encoder.inverse_transform([random_face_class])
+
     # prediction for the face
     samples = expand_dims(random_face_emb, axis=0)
     yhat_class = model.predict(samples)
     yhat_prob = model.predict_proba(samples)
+
     # get name
     class_index = yhat_class[0]
     class_probability = yhat_prob[0, class_index] * 100
     predict_names = out_encoder.inverse_transform(yhat_class)
     print('Predicted: %s (%.3f)' % (predict_names[0], class_probability))
-    print('Expected: %s' % random_face_name[0])
+    print('Expected: %s' % user)
     title = '%s (%.3f)' % (predict_names[0], class_probability)
 
-    return title
+    return title, predict_names[0]
 
 
 def save_data(blob, face_id, directory):
