@@ -78,11 +78,11 @@ def check_registration():
     username = request.args.get('username')
     if os.path.isdir('dataset/train/' + username):
         if len(os.listdir('dataset/train/' + username)) > 10:
-            return True, 200
+            return '1', 200
         else:
-            return False, 400
+            return '0', 400
     else:
-        return False, 400
+        return '0', 400
 
 
 @app.route('/check_authentication', methods=['GET'])
@@ -93,10 +93,11 @@ def check_authentication():
         data = json.load(f)
         f.close()
         recognition_service.delete_authentication(username)
+        print(time.time() - data['created_at'])
         if time.time() - data['created_at'] < 60:
-            return True, 400
+            return '1', 400
     else:
-        return False, 400
+        return '0', 400
 
 
 @app.route('/register_user', methods=['POST'])
