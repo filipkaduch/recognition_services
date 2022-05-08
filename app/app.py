@@ -86,7 +86,7 @@ def check_registration():
 
 
 @app.route('/check_authentication', methods=['GET'])
-def check_registration():
+def check_authentication():
     username = request.args.get('username')
     if os.path.isdir('auth/' + username):
         f = open(os.getcwd() + "/auth/" + str(username) + "/data.json")
