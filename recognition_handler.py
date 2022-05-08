@@ -17,7 +17,6 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import Normalizer
 from sklearn.svm import SVC
 
-from random import choice
 import uuid
 
 import recognition_helper as recognition_helper

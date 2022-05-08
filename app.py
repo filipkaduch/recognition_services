@@ -2,19 +2,16 @@ import base64
 import io
 import os
 import sys
-import ssl
-import requests
 
 import time
-import PIL
 import numpy as np
 from PIL.Image import Image
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 from flask import request
 import json
-import app.recognition_handler as recognition_service
+import recognition_handler as recognition_service
 from pyngrok import ngrok
 
 app = Flask(__name__)
