@@ -1,7 +1,7 @@
 FROM python:3.6-slim-buster
 
 ENV FLASK_ENV development
-ENV FLASK_APP app
+ENV FLASK_APP app/app.py
 
 COPY . /app
 WORKDIR /app
