@@ -424,7 +424,7 @@ def delete_authentication(user):
     if os.path.exists(filePath):
         os.remove(filePath)
     else:
-       return "Can not delete the file as it doesn't exists"
+        return "Can not delete the file as it doesn't exists"
 
     return "Successfully deleted auth token"
 
