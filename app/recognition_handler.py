@@ -124,7 +124,7 @@ def face_detect():
     cv2.destroyAllWindows()
 
 
-def gather_data(id='Filip'):
+def gather_data(id='xrosina@stuba.sk'):
     cam = cv2.VideoCapture(0)
     cam.set(3, 640)  # set video width
     cam.set(4, 480)  # set video height
@@ -202,7 +202,7 @@ def recognize():
     faceCascade = cv2.CascadeClassifier(cascadePath);
     font = cv2.FONT_HERSHEY_SIMPLEX  # iniciate id counter
     id = 0  # names related to ids: example ==> Marcelo: id=1,  etc
-    names = ['None', 'Filip', 'Filip', 'B', 'Z', 'W']  # Initialize and start realtime video capture
+    names = ['None', 'xrosina@stuba.sk', 'xrosina@stuba.sk', 'B', 'Z', 'W']  # Initialize and start realtime video capture
     cam = cv2.VideoCapture(0)
     cam.set(3, 640)  # set video widht
     cam.set(4, 480)  # set video height# Define min window size to be recognized as a face
