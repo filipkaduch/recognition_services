@@ -24,7 +24,7 @@ google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
 greenlet==1.1.2
 grpcio==1.42.0
-h5py==3.1.0
+h5py==2.10.0
 idna==3.3
 importlib-metadata==4.8.3
 itsdangerous==2.0.1
