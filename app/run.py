@@ -18,6 +18,7 @@ import recognition_handler as recognition_service
 from pyngrok import ngrok
 
 app = Flask(__name__)
+
 CORS(app)
 
 def init_webhooks(base_url):
