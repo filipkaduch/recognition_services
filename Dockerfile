@@ -13,4 +13,4 @@ RUN apt-get install ffmpeg libsm6 libxext6  -y
 
 COPY . .
 
-CMD gunicorn --bind 0.0.0.0:5000 app:app
+CMD gunicorn --bind 0.0.0.0:5000 run:app
