@@ -2,6 +2,8 @@ import base64
 import numpy as np
 import cv2
 import os
+import json
+import time
 
 from os import listdir
 from os.path import isdir
@@ -402,6 +404,29 @@ def save_data(blob, face_id, directory):
         print(os.path.dirname(os.path.realpath(__file__)))
         print(os.getcwd())
     return 'Saved'
+
+
+def save_authentication(user):
+    os.mkdir(os.getcwd() + "/auth/" + str(user))
+    userDict = {
+        "user": user,
+        "created_at": time.now()
+    }
+    jsonString = json.dumps(userDict)
+    jsonFile = open(os.getcwd() + "/auth/" + str(user) + "/data.json", "w")
+    jsonFile.write(jsonString)
+    jsonFile.close()
+
+
+def delete_authentication(user):
+    filePath = os.getcwd() + "/auth/" + str(user) + "/data.json"
+
+    if os.path.exists(filePath):
+        os.remove(filePath)
+    else:
+       return "Can not delete the file as it doesn't exists"
+
+    return "Successfully deleted auth token"
 
 
 def remove_user():

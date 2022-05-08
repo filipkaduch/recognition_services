@@ -5,6 +5,7 @@ import sys
 import ssl
 import requests
 
+import time
 import PIL
 import numpy as np
 from PIL.Image import Image
@@ -66,7 +67,8 @@ def recognize_users():
         return 'Not detected', 200
     recognized_text, predicted_name = recognition_service.main_recognition_handler(request_data['data']['user'])
     if predicted_name == request_data['data']['user']:
-        requests.post(url='http://147.175.105.115:8080/authy', data='Success')
+        recognition_service.save_authentication(request_data['data']['user'])
+        # requests.post(url='http://147.175.105.115:8080/authy', data='Success')
     return recognized_text, 200
 
 
@@ -78,6 +80,20 @@ def check_registration():
             return True, 200
         else:
             return False, 400
+    else:
+        return False, 400
+
+
+@app.route('/check_authentication', methods=['GET'])
+def check_registration():
+    username = request.args.get('username')
+    if os.path.isdir('auth/' + username):
+        f = open(os.getcwd() + "/auth/" + str(username) + "/data.json")
+        data = json.load(f)
+        f.close()
+        recognition_service.delete_authentication(username)
+        if time.time() - data['created_at'] < 60:
+            return True, 400
     else:
         return False, 400
 
