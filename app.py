@@ -12,30 +12,30 @@ from flask_cors import CORS
 from flask import request
 import json
 import recognition_handler as recognition_service
-from pyngrok import ngrok
+# from pyngrok import ngrok
 
 app = Flask(__name__)
 
 CORS(app)
 
-def init_webhooks(base_url):
-    # Update inbound traffic via APIs to use the public-facing ngrok URL
-    pass
-
-app.config.from_mapping(
-    BASE_URL="http://localhost:5000",
-    USE_NGROK=os.environ.get("USE_NGROK", "False") == "True" and os.environ.get("WERKZEUG_RUN_MAIN") != "true"
-)
+# def init_webhooks(base_url):
+#     # Update inbound traffic via APIs to use the public-facing ngrok URL
+#     pass
+#
+# app.config.from_mapping(
+#     BASE_URL="http://localhost:5000",
+#     USE_NGROK=os.environ.get("USE_NGROK", "False") == "True" and os.environ.get("WERKZEUG_RUN_MAIN") != "true"
+# )
 # when starting the server
-port = sys.argv[sys.argv.index("--port") + 1] if "--port" in sys.argv else 5000
-ngrok.set_auth_token('23vx4PcbjWZ3JC8pQt4oIpSiNGD_7yboeKyaQkwrYh38oNy4s')
+# port = sys.argv[sys.argv.index("--port") + 1] if "--port" in sys.argv else 5000
+# ngrok.set_auth_token('23vx4PcbjWZ3JC8pQt4oIpSiNGD_7yboeKyaQkwrYh38oNy4s')
 # Open a ngrok tunnel to the dev server
-public_url = ngrok.connect(port).public_url
-print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}\"".format(public_url, port))
+# public_url = ngrok.connect(port).public_url
+# print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}\"".format(public_url, port))
 
 # Update any base URLs or webhooks to use the public ngrok URL
-app.config["BASE_URL"] = public_url
-init_webhooks(public_url)
+# app.config["BASE_URL"] = public_url
+# init_webhooks(public_url)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
