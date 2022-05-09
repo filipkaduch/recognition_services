@@ -49,14 +49,14 @@ def stringToRGB(base64_string):
 
 
 @app.route('/check_view', methods=['POST'])
-@cross_origin
+@cross_origin()
 def check_views():
     request_data = json.loads(request.data)
     return recognition_service.check_viewBlob(request_data['data']['image'], request_data['data']['detection']), 200
 
 
 @app.route('/recognize_user', methods=['POST'])
-@cross_origin
+@cross_origin()
 def recognize_users():
     request_data = json.loads(request.data)
     check = recognition_service.check_viewBlob(request_data['data']['image'], 'face', request_data['data']['user'])
@@ -73,7 +73,7 @@ def recognize_users():
 
 
 @app.route('/check_registration', methods=['GET'])
-@cross_origin
+@cross_origin()
 def check_registrations():
     username = request.args.get('username')
     if os.path.isdir('dataset/train/' + username):
@@ -86,7 +86,7 @@ def check_registrations():
 
 
 @app.route('/check_authentication', methods=['GET'])
-@cross_origin
+@cross_origin()
 def check_authentications():
     username = request.args.get('username')
     if os.path.isdir('auth/' + username):
@@ -102,7 +102,7 @@ def check_authentications():
 
 
 @app.route('/register_user', methods=['POST'])
-@cross_origin
+@cross_origin()
 def register_users():
     request_data = json.loads(request.data)
     fh = open("imageToSave.png", "wb")
@@ -119,7 +119,7 @@ def register_users():
 
 
 @app.route('/delete_user', methods=['DELETE'])
-@cross_origin
+@cross_origin()
 def delete_users():
     request_data = json.loads(request.data)
     return recognition_service.remove_user(request_data['user']), 200
