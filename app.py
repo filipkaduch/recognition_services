@@ -7,7 +7,7 @@ import time
 import numpy as np
 from PIL.Image import Image
 from flask import Flask
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 from flask import request
 import json
