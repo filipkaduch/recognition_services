@@ -48,15 +48,15 @@ def stringToRGB(base64_string):
     return np.array(image)
 
 
-@app.route('/check_view', methods=['POST'])
 @cross_origin
+@app.route('/check_view', methods=['POST'])
 def check_views():
     request_data = json.loads(request.data)
     return recognition_service.check_viewBlob(request_data['data']['image'], request_data['data']['detection']), 200
 
 
-@app.route('/recognize_user', methods=['POST'])
 @cross_origin
+@app.route('/recognize_user', methods=['POST'])
 def recognize_users():
     request_data = json.loads(request.data)
     check = recognition_service.check_viewBlob(request_data['data']['image'], 'face', request_data['data']['user'])
@@ -72,8 +72,8 @@ def recognize_users():
     return recognized_text, 200
 
 
-@app.route('/check_registration', methods=['GET'])
 @cross_origin
+@app.route('/check_registration', methods=['GET'])
 def check_registration():
     username = request.args.get('username')
     if os.path.isdir('dataset/train/' + username):
@@ -85,8 +85,8 @@ def check_registration():
         return '0', 200
 
 
-@app.route('/check_authentication', methods=['GET'])
 @cross_origin
+@app.route('/check_authentication', methods=['GET'])
 def check_authentication():
     username = request.args.get('username')
     if os.path.isdir('auth/' + username):
@@ -101,8 +101,8 @@ def check_authentication():
         return '0', 200
 
 
-@app.route('/register_user', methods=['POST'])
 @cross_origin
+@app.route('/register_user', methods=['POST'])
 def register_users():
     request_data = json.loads(request.data)
     fh = open("imageToSave.png", "wb")
@@ -118,11 +118,11 @@ def register_users():
     # recognition_service.gather_data(request_data['data']['image'], request_data['data']['detection'])
 
 
+@cross_origin
 @app.route('/delete_user', methods=['DELETE'])
 def delete_users():
     request_data = json.loads(request.data)
     return recognition_service.remove_user(request_data['user']), 200
-
 
 
 if __name__ == '__main__':
