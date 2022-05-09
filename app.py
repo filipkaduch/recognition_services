@@ -62,7 +62,7 @@ def recognize_users():
     check = recognition_service.check_viewBlob(request_data['data']['image'], 'face', request_data['data']['user'])
 
     if check != 'Not detected':
-        recognition_service.save_data(request_data['data']['image'], request_data['data']['user'], 'val'), 200
+        recognition_service.save_data(request_data['data']['image'], request_data['data']['user'], 'val')
     else:
         return 'Not detected', 200
     recognized_text, predicted_name = recognition_service.main_recognition_handler(request_data['data']['user'])
