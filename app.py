@@ -16,7 +16,7 @@ import recognition_handler as recognition_service
 
 app = Flask(__name__)
 
-CORS(app)
+cors = CORS(app)
 
 # def init_webhooks(base_url):
 #     # Update inbound traffic via APIs to use the public-facing ngrok URL
@@ -48,15 +48,15 @@ def stringToRGB(base64_string):
     return np.array(image)
 
 
-@cross_origin
 @app.route('/check_view', methods=['POST'])
+@cross_origin
 def check_views():
     request_data = json.loads(request.data)
     return recognition_service.check_viewBlob(request_data['data']['image'], request_data['data']['detection']), 200
 
 
-@cross_origin
 @app.route('/recognize_user', methods=['POST'])
+@cross_origin
 def recognize_users():
     request_data = json.loads(request.data)
     check = recognition_service.check_viewBlob(request_data['data']['image'], 'face', request_data['data']['user'])
@@ -72,9 +72,9 @@ def recognize_users():
     return recognized_text, 200
 
 
-@cross_origin
 @app.route('/check_registration', methods=['GET'])
-def check_registration():
+@cross_origin
+def check_registrations():
     username = request.args.get('username')
     if os.path.isdir('dataset/train/' + username):
         if len(os.listdir('dataset/train/' + username)) > 10:
@@ -85,9 +85,9 @@ def check_registration():
         return '0', 200
 
 
-@cross_origin
 @app.route('/check_authentication', methods=['GET'])
-def check_authentication():
+@cross_origin
+def check_authentications():
     username = request.args.get('username')
     if os.path.isdir('auth/' + username):
         f = open(os.getcwd() + "/auth/" + str(username) + "/data.json")
@@ -101,8 +101,8 @@ def check_authentication():
         return '0', 200
 
 
-@cross_origin
 @app.route('/register_user', methods=['POST'])
+@cross_origin
 def register_users():
     request_data = json.loads(request.data)
     fh = open("imageToSave.png", "wb")
@@ -118,8 +118,8 @@ def register_users():
     # recognition_service.gather_data(request_data['data']['image'], request_data['data']['detection'])
 
 
-@cross_origin
 @app.route('/delete_user', methods=['DELETE'])
+@cross_origin
 def delete_users():
     request_data = json.loads(request.data)
     return recognition_service.remove_user(request_data['user']), 200
