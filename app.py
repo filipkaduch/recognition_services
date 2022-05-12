@@ -103,8 +103,7 @@ def check_authentications():
         # print(time.time() - data['created_at'])
         if (datetime.now() - date_time_obj).seconds < 120:
             return '1', 200
-    else:
-        return '0', 200
+    return '0', 200
 
 
 @app.route('/register_user', methods=['POST'])
