@@ -95,14 +95,15 @@ def check_registrations():
 def check_authentications():
     username = request.args.get('username')
     if os.path.isdir('auth/' + username):
-        f = open(os.getcwd() + "/auth/" + str(username) + "/data.json")
-        data = json.load(f)
-        f.close()
-        recognition_service.delete_authentication(username)
-        date_time_obj = datetime.strptime(data['created_at'], "%m/%d/%Y, %H:%M:%S")
-        # print(time.time() - data['created_at'])
-        if (datetime.now() - date_time_obj).seconds < 120:
-            return '1', 200
+        if os.path.exists(os.getcwd() + "/auth/" + str(username) + "/data.json"):
+            f = open(os.getcwd() + "/auth/" + str(username) + "/data.json")
+            data = json.load(f)
+            f.close()
+            recognition_service.delete_authentication(username)
+            date_time_obj = datetime.strptime(data['created_at'], "%m/%d/%Y, %H:%M:%S")
+            # print(time.time() - data['created_at'])
+            if (datetime.now() - date_time_obj).seconds < 120:
+                return '1', 200
     return '0', 200
 
 

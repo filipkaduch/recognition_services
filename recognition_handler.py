@@ -60,8 +60,6 @@ def extract_face(cvimage, required_size=(160, 160), save_image=False):
         image = image.resize(required_size)
 
         if save_image is True:
-            print('RETURN IMG')
-            print(image)
             return np.asarray(image)
         else:
             face_array = asarray(image)
@@ -283,8 +281,6 @@ def load_dataset(directory, user=None):
         X.extend(faces)
         y.extend(labels)
 
-    print(X)
-    print(y)
     if user is not None:
         return photo_index, asarray(X), asarray(y)
     else:
@@ -330,7 +326,6 @@ def main_recognition_handler(user):
     savez_compressed('compressed-embeddings.npz', newTrainX, trainy, newTestX, testy)
 
     data_Embed = load('compressed-embeddings.npz')
-    print(data_Embed)
     trainX_Embed, trainy_Embed, testX_Embed, testy_Embed = data_Embed['arr_0'], data_Embed['arr_1'], data_Embed[
         'arr_2'], data_Embed['arr_3']
     print('Dataset: train=%d, test=%d' % (trainX_Embed.shape[0], testX_Embed.shape[0]))
@@ -402,6 +397,7 @@ def save_data(blob, face_id, directory):
         print(writeStatus)
         print(os.path.dirname(os.path.realpath(__file__)))
         print(os.getcwd())
+
     return 'Saved'
 
 
