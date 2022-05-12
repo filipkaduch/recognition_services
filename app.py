@@ -13,14 +13,14 @@ from flask import request
 import json
 import recognition_handler as recognition_service
 # from pyngrok import ngrok
-from flask_talisman import Talisman
+# from flask_talisman import Talisman
 import ssl
 
 # ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
 # ctx.load_cert_chain('fullchain.pem', 'privKey.pem')
 
 app = Flask(__name__)
-talisman = Talisman(app, content_security_policy=None)
+# talisman = Talisman(app, content_security_policy=None)
 cors = CORS(app)
 
 # def init_webhooks(base_url):
@@ -132,5 +132,6 @@ def delete_users():
 
 
 if __name__ == '__main__':
-    context = ('/etc/letsencrypt/live/tp-projekt-api.xyz/fullchain.pem', '/etc/letsencrypt/live/tp-projekt-api.xyz/privkey.pem')
-    app.run(debug=True, host='0.0.0.0', port=5000, ssl_context=context)
+    # context = ('/etc/letsencrypt/live/tp-projekt-api.xyz/fullchain.pem', '/etc/letsencrypt/live/tp-projekt-api.xyz/privkey.pem')
+    #app.run(debug=True, host='0.0.0.0', port=5000, ssl_context=context)
+    app.run(debug=True, host='0.0.0.0')
