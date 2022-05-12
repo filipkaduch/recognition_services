@@ -7,14 +7,16 @@ cffi==1.15.0
 charset-normalizer==2.0.7
 clang==5.0
 click==8.0.3
-gunicorn==19.3.0
 cmake==3.22.0
 colorama==0.4.4
 cors==1.0.1
+cryptography==37.0.2
 cycler==0.11.0
+dataclasses==0.8
 filelock==3.4.1
 Flask==2.0.2
 Flask-Cors==3.0.10
+flask-talisman==1.0.0
 flatbuffers==1.12
 future==0.18.2
 gast==0.4.0
@@ -24,6 +26,7 @@ google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
 greenlet==1.1.2
 grpcio==1.42.0
+gunicorn==19.3.0
 h5py==3.1.0
 idna==3.3
 importlib-metadata==4.8.3
@@ -47,6 +50,8 @@ protobuf==3.19.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21
+pyngrok==5.1.0
+pyOpenSSL==22.0.0
 pyparsing==3.0.6
 PySocks==1.7.1
 python-dateutil==2.8.2
@@ -58,6 +63,8 @@ rsa==4.8
 scikit-learn==0.24.2
 scipy==1.5.4
 six==1.15.0
+SQLAlchemy==1.4.29
+talisman==0.1.0
 tenacity==8.0.1
 tensorboard==2.6.0
 tensorboard-data-server==0.6.1

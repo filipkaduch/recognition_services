@@ -3,7 +3,7 @@ import io
 import os
 import sys
 
-import time
+from datetime import datetime
 import numpy as np
 from PIL.Image import Image
 from flask import Flask
@@ -13,9 +13,14 @@ from flask import request
 import json
 import recognition_handler as recognition_service
 # from pyngrok import ngrok
+from flask_talisman import Talisman
+import ssl
+
+# ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+# ctx.load_cert_chain('fullchain.pem', 'privKey.pem')
 
 app = Flask(__name__)
-
+talisman = Talisman(app, content_security_policy=None)
 cors = CORS(app)
 
 # def init_webhooks(base_url):
@@ -94,8 +99,9 @@ def check_authentications():
         data = json.load(f)
         f.close()
         recognition_service.delete_authentication(username)
+        date_time_obj = datetime.strptime(data['created_at'], "%m/%d/%Y, %H:%M:%S")
         # print(time.time() - data['created_at'])
-        if time.time() - data['created_at'] < 60:
+        if (datetime.now() - date_time_obj).seconds < 120:
             return '1', 200
     else:
         return '0', 200
@@ -126,4 +132,5 @@ def delete_users():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    context = ('/etc/letsencrypt/live/tp-projekt-api.xyz/fullchain.pem', '/etc/letsencrypt/live/tp-projekt-api.xyz/privkey.pem')
+    app.run(debug=True, host='0.0.0.0', port=5000, ssl_context=context)

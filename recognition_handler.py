@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import os
 import json
-import time
+from datetime import datetime
 
 from os import listdir
 from os.path import isdir
@@ -406,10 +406,12 @@ def save_data(blob, face_id, directory):
 
 
 def save_authentication(user):
-    os.mkdir(os.getcwd() + "/auth/" + str(user))
+    if os.path.exists(os.getcwd() + "/auth/" + str(user)) == False:
+        os.mkdir(os.getcwd() + "/auth/" + str(user))
+
     userDict = {
         "user": user,
-        "created_at": time.now()
+        "created_at": datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     }
     jsonString = json.dumps(userDict)
     jsonFile = open(os.getcwd() + "/auth/" + str(user) + "/data.json", "w")
